@@ -17,6 +17,7 @@ Sécurité : JSON Web Tokens (LexikJWTAuthenticationBundle)
 Mise en place des firewalls et du contrôle d'accès dans security.yaml pour bloquer les routes de l'API en exigeant un token valide, tout en laissant la route de login publique.
 
 YAML
+```yaml
 # config/packages/security.yaml
 security:
     firewalls:
@@ -36,6 +37,7 @@ security:
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+```
 
 2. Filtrage global des données avec Doctrine (CurrentUser)
 Afin d'intercepter les requêtes avant qu'elles n'atteignent la base de données, j'ai créé une extension Doctrine (CurrentUserExtension.php) implémentant QueryCollectionExtensionInterface et QueryItemExtensionInterface.
@@ -43,6 +45,7 @@ Afin d'intercepter les requêtes avant qu'elles n'atteignent la base de données
 Voici la logique algorithmique utilisant le QueryBuilder pour réaliser les jointures SQL nécessaires selon l'entité demandée :
 
 PHP
+```php
 <?php
 // src/Doctrine/CurrentUserExtension.php
 
@@ -72,3 +75,4 @@ if (Criteria::class === $resourceClass) {
     $queryBuilder->andWhere('les_notes.student = :utilisateur');
     $queryBuilder->setParameter('utilisateur', $etudiantConnecte);
 }
+```
