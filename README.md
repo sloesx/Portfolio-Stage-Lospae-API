@@ -76,3 +76,4 @@ if (Criteria::class === $resourceClass) {
     $queryBuilder->setParameter('utilisateur', $etudiantConnecte);
 }
 ```
+
